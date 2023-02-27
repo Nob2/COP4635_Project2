@@ -40,6 +40,10 @@ int main(int argv, char** argc) {
             manager.closeConnection();
             exit(1);
         }
+
+        // Server is set up to close connection after each request
+        manager.closeConnection();
+        manager.connectToHost(argc[1]);
     }
 
     manager.closeConnection();
