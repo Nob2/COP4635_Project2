@@ -33,7 +33,7 @@ void clientManager::connectToHost(std::string hostName) {
         exit(1);
     }
 
-    if(inet_pton(AF_INET, server_address.sin_addr, &server_address.sin_addr) <= 0) {
+    if(inet_pton(AF_INET, "127.0.0.1", &server_address.sin_addr) <= 0) {
         printf("Invalid address. Exiting program\n");
         exit(1);
     }
@@ -49,7 +49,7 @@ void clientManager::connectToHost(std::string hostName) {
 }
 
 bool clientManager::retrieveFile(std::string fileName) {
-    int result = send(clientSocket, fileName, strlen(fileName.c_str()), 0);
+    int result = send(clientSocket, fileName.c_str(), strlen(fileName.c_str()), 0);
 
     char buffer[1024] = {0};
     int readResult = read(clientSocket, buffer, sizeof(buffer));
