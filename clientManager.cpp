@@ -6,9 +6,10 @@
 */
 
 #include "clientManager.hpp"
+#include <string.h>
 
 struct hostent* clientManager::retrieveHostName(std::string nameOfHost) {
-    struct hostent *hostName = gethostbyname(nameOfHost);
+    struct hostent *hostName = gethostbyname(nameOfHost.c_str());
 
     if (hostName == nullptr)
     {
@@ -16,19 +17,24 @@ struct hostent* clientManager::retrieveHostName(std::string nameOfHost) {
         exit(1);
     }
 
-    printf("Server IP is: %s\n", inet_ntoa(hostName->h_addr));
+    server_address.sin_addr.s_addr = *((unsigned long *) hostName->h_addr);
 
     return hostName;
 }
 
 void clientManager::connectToHost(std::string hostName) {
-    struct hostent *hostName = retrieveHostName(hostName);
+    struct hostent *hostNameEnt = retrieveHostName(hostName);
 
-    this->socketAddress.sin_family = AF_INET;
-    this->socketAddress.sin_port = htons(PORT_NUMBER);
+    this->server_address.sin_family = AF_INET;
+    this->server_address.sin_port = htons(PORT_NUMBER);
 
     if((clientSocket = socket(AF_INET, SOCK_STREAM,0)) < 0) {
         printf("Failed to create socket\n");
+        exit(1);
+    }
+
+    if(inet_pton(AF_INET, server_address.sin_addr, &server_address.sin_addr) <= 0) {
+        printf("Invalid address. Exiting program\n");
         exit(1);
     }
 
@@ -43,7 +49,7 @@ void clientManager::connectToHost(std::string hostName) {
 }
 
 bool clientManager::retrieveFile(std::string fileName) {
-    int result = send(clientSocket, fileName, strlen(fileName), 0);
+    int result = send(clientSocket, fileName, strlen(fileName.c_str()), 0);
 
     char buffer[1024] = {0};
     int readResult = read(clientSocket, buffer, sizeof(buffer));

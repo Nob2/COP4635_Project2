@@ -19,8 +19,7 @@
 class clientManager {
     private:
         int clientSocket;
-        struct sockaddr_in socketAddress;
-        std::string hostName;
+        struct sockaddr_in server_address;
         std::string fileContents;
         struct hostent* retrieveHostName(std::string hostName);
     public:
