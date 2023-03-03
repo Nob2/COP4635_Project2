@@ -109,6 +109,8 @@ std::string Server::parseForFile(int socket)
     }
     std::string stringBuffer(buffer);
 
+    printf("%s\n", stringBuffer.c_str());
+
     std::istringstream clientRequest(stringBuffer);
     std::string documentName = "";
 
