@@ -54,7 +54,8 @@ bool clientManager::retrieveFile(std::string fileName) {
     std::string headerTail;
 
     headerHead = "GET " + fileName;
-    headerTail = " HTTP/1.1 \n" +
+    headerTail = " HTTP/1.1 \n";
+    headerTail +=
     "Host: localhost:8080 \n " +
     "Connection: keep-alive \n "
     "Accept: image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8 \n " +
