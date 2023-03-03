@@ -9,6 +9,7 @@
 #include <string.h>
 
 struct hostent* clientManager::retrieveHostName(std::string nameOfHost) {
+    this->nameOfHost = nameOfHost;
     struct hostent *hostName = gethostbyname(nameOfHost.c_str());
 
     if (hostName == nullptr)
@@ -55,15 +56,14 @@ bool clientManager::retrieveFile(std::string fileName) {
 
     headerHead = "GET " + fileName;
     headerTail = " HTTP/1.1 \n";
-    headerTail +=
-    "Host: localhost:8080 \n " +
-    "Connection: keep-alive \n "
-    "Accept: image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8 \n " +
-    "Sec-Fetch-Site: same-origin \n " +
-    "Sec-Fetch-Mode: no-cors \n " +
-    "Sec-Fetch-Dest: image \n " +
-    "Accept-Encoding: gzip, deflate, br \n " +
-    "Accept-Language: en-US,en;q=0.9 \n";
+    headerTail += "Host: " + this->nameOfHost + "\n";
+    headerTail += "Connection: keep-alive \n ";
+    headerTail += "Accept: image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8 \n ";
+    headerTail += "Sec-Fetch-Site: same-origin \n ";
+    headerTail += "Sec-Fetch-Mode: no-cors \n ";
+    headerTail += "Sec-Fetch-Dest: image \n ";
+    headerTail += "Accept-Encoding: gzip, deflate, br \n ";
+    headerTail += "Accept-Language: en-US,en;q=0.9 \n";
 
     std::string resultantRequest = headerHead;
     resultantRequest += headerTail;
