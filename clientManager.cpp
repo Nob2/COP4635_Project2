@@ -67,7 +67,7 @@ bool clientManager::retrieveFile(std::string fileName) {
 
     std::string resultantRequest = headerHead;
     resultantRequest += headerTail;
-    int result = send(clientSocket, resultantRequest.c_str(), strlen(fileName.c_str()), 0);
+    int result = send(clientSocket, resultantRequest.c_str(), strlen(resultantRequest.c_str()), 0);
 
     char buffer[1024] = {0};
     int readResult = read(clientSocket, buffer, sizeof(buffer));
