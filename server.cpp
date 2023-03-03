@@ -116,6 +116,11 @@ std::string Server::parseForFile(int socket)
     std::getline(clientRequest, documentName);
     close(socketRead);
 
+    for(auto const& document : avaialableFiles) {
+        if(documentName.find(document.first) != std::string::npos)
+            documentName = document.first;
+    }
+
     if (documentName.find(index) != std::string::npos)
         documentName = "index.html";
     else if (documentName.find(image) != std::string::npos)
