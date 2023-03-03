@@ -54,7 +54,7 @@ bool clientManager::retrieveFile(std::string fileName) {
     std::string headerHead;
     std::string headerTail;
 
-    headerHead = "GET " + fileName;
+    headerHead = "GET /" + fileName;
     headerTail = " HTTP/1.1 \n";
     headerTail += "Host: " + this->nameOfHost + "\n";
     headerTail += "Connection: keep-alive \n ";
