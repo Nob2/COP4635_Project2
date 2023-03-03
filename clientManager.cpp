@@ -49,7 +49,24 @@ void clientManager::connectToHost(std::string hostName) {
 }
 
 bool clientManager::retrieveFile(std::string fileName) {
-    int result = send(clientSocket, fileName.c_str(), strlen(fileName.c_str()), 0);
+
+    std::string headerHead;
+    std::string headerTail;
+
+    headerHead = "GET " + fileName;
+    headerTail = " HTTP/1.1 \n
+    Host: localhost:8080 \n
+    Connection: keep-alive \n
+    Accept: image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8 \n
+    Sec-Fetch-Site: same-origin \n
+    Sec-Fetch-Mode: no-cors \n
+    Sec-Fetch-Dest: image \n
+    Accept-Encoding: gzip, deflate, br \n
+    Accept-Language: en-US,en;q=0.9 \n";
+
+    std::string resultantRequest = headerHead;
+    resultantRequest += headerTail;
+    int result = send(clientSocket, resultantRequest.c_str(), strlen(fileName.c_str()), 0);
 
     char buffer[1024] = {0};
     int readResult = read(clientSocket, buffer, sizeof(buffer));
