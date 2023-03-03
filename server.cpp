@@ -120,13 +120,6 @@ std::string Server::parseForFile(int socket)
         if(documentName.find(document.first) != std::string::npos)
             documentName = document.first;
     }
-
-    if (documentName.find(index) != std::string::npos)
-        documentName = "index.html";
-    else if (documentName.find(image) != std::string::npos)
-        documentName = image;
-    else if (documentName.find(presence) != std::string::npos)
-        documentName = presence;
     
     return documentName;
 }
