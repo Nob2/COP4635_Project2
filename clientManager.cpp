@@ -24,7 +24,7 @@ struct hostent* clientManager::retrieveHostName(std::string nameOfHost) {
 }
 
 void clientManager::connectToHost(std::string hostName) {
-    struct hostent *hostNameEnt = retrieveHostName(hostName);
+    retrieveHostName(hostName);
 
     this->server_address.sin_family = AF_INET;
     this->server_address.sin_port = htons(PORT_NUMBER);
@@ -35,7 +35,7 @@ void clientManager::connectToHost(std::string hostName) {
     }
 
     if(inet_pton(AF_INET, "127.0.0.1", &server_address.sin_addr) <= 0) {
-        printf("Invalid address. Exiting program\n");
+        printf("Address did not resolve to localhost. Exiting program\n");
         exit(1);
     }
 
